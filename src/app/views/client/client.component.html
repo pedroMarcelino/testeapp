@@ -1,0 +1,66 @@
+<mat-card class="page-card">
+  <h2>Gerenciamento de clientes</h2>
+
+  <button (click)="newClient()" class="btn-add" mat-fab>
+    <mat-icon>add</mat-icon>
+  </button>
+  <button class='btn-atualizar' mat-button (click)="listar()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+
+  <div>
+    <mat-table [dataSource]="clientes">
+      <ng-container matColumnDef="nome">
+        <mat-header-cell *matHeaderCellDef>
+          Nome
+        </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+          {{cliente.nome}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="cpf">
+        <mat-header-cell *matHeaderCellDef>
+          cpf
+        </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+          {{cliente.cpf}}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="acoes">
+        <mat-header-cell *matHeaderCellDef>
+          Acoes
+        </mat-header-cell>
+        <mat-cell *matCellDef="let cliente">
+          <button mat-button color="" (click)="remover(cliente._id)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button mat-button color="" (click)="selecionar(cliente)">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="colunas"></mat-header-row>
+      <mat-row *matRowDef="let row; columns:colunas"></mat-row>
+    </mat-table>
+  </div>
+
+  <div *ngIf="clienteSelecionado" class="area-edicao">
+    <h2>Inserir / Editar</h2>
+    <mat-form-field class="form-inp">
+      <mat-label>Nome</mat-label>
+      <input [(ngModel)]="clienteSelecionado.nome" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="form-inp">
+      <mat-label>CPF</mat-label>
+      <input [(ngModel)]="clienteSelecionado.cpf" matInput>
+    </mat-form-field>
+
+    <button mat-raised-button (click)="cancelar()">Cancelar</button>
+    <button class="btn-acao"mat-raised-button (click)="salvar()">Salvar</button>
+  </div>
+
+</mat-card>
